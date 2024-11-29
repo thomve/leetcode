@@ -39,3 +39,18 @@ class RemoveDuplicates:
                 nums[k] = nums[i]
                 k += 1
         return k
+
+class RemoveDuplicates2:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n <= 2:
+            return n
+
+        write_index = 2
+
+        for read_index in range(2, n):
+            if nums[read_index] != nums[write_index - 2]:
+                nums[write_index] = nums[read_index]
+                write_index += 1
+
+        return write_index
