@@ -54,3 +54,34 @@ class RemoveDuplicates2:
                 write_index += 1
 
         return write_index
+    
+class MajElement:
+    def majorityElement(self, nums: List[int]) -> int:
+        # Boyer–Moore majority vote algorithm
+        candidate = None
+        count = 0
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += 1 if num == candidate else -1
+        return candidate
+    
+class RotateArray:
+    def rotate(self, nums: List[int], k: int) -> None:
+        n = len(nums)
+        k %= n
+        start = count = 0
+
+        while count < n:
+            current = start
+            prev_value = nums[start]
+            while True:
+                next_idx = (current + k) % n
+                nums[next_idx], prev_value = prev_value, nums[next_idx]
+                current = next_idx
+                count += 1
+
+                if start == current:
+                    break
+            start += 1
+        
