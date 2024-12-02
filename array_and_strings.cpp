@@ -28,6 +28,29 @@ bool canJump(vector<int>& nums) {
     return false;
 }
 
+int minJump(vector<int>& nums) {
+    int n = nums.size();
+    if (n <= 1) return 0;
+    if (nums[0] == 0) return -1;
+
+    int jumps = 0;
+    int farthest = 0;
+    int currentEnd = 0;
+
+    for (int i = 0; i < n - 1; ++i) {
+        farthest = std::max(farthest, i + nums[i]);
+
+        if (i == currentEnd) {
+            jumps++;
+            currentEnd = farthest;
+
+            if (currentEnd >= n - 1) break;
+        }
+    }
+
+    return jumps;
+}
+
 int main() {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
     std::cout << "Maximum Profit: " << maxProfit(prices) << std::endl;
@@ -37,6 +60,8 @@ int main() {
 
     nums = {3, 2, 1, 0, 4};
     std::cout << (canJump(nums) ? "true" : "false") << std::endl;
+
+    std::cout << "Minimum number of jumps: " << minJump(nums) << std::endl;
     
     return 0;
 }
