@@ -93,20 +93,29 @@ public:
     }
     
     bool insert(int val) {
-        auto ret = set.insert(val);
+        auto ret = mySet.insert(val);
         return ret.second;
     }
     
     bool remove(int val) {
-        int res = set.erase(val);
+        int res = mySet.erase(val);
         return res ? true : false;
     }
     
     int getRandom() {
-        int randomNumber = rand() % set.size();
-        return *(std::next(set.begin(), randomNumber));
+        int randomNumber = rand() % mySet.size();
+        return *(std::next(mySet.begin(), randomNumber));
     }
-    std::set<int> set;
+
+    void printSet() const {
+        std::cout << "{ ";
+        for (const auto& elem : mySet) {
+            std::cout << elem << " ";
+        }
+        std::cout << "}" << std::endl;
+    }
+
+    std::set<int> mySet;
 };
 
 int main()
@@ -128,10 +137,16 @@ int main()
     RandomizedSet* obj = new RandomizedSet();
     std::cout << "obj is: " << obj << std::endl;
     bool param_1 = obj->insert(2);
+    obj->insert(4);
     std::cout << "param1 is: " << param_1 << std::endl;
     bool param_2 = obj->remove(2);
     std::cout << "param2 is: " << param_2 << std::endl;
+    
+    obj->printSet();
+    
     int param_3 = obj->getRandom();
+    
+    std::cout << "param3 is: " << param_3 << std::endl;
 
     return 0;
 }
