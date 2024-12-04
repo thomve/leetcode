@@ -135,6 +135,23 @@ std::vector<int> productExceptSelf(vector<int>& products) {
     return output;        
 }
 
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int total_gas = 0, total_cost = 0;
+        int tank = 0, start = 0;
+
+        for (int i = 0; i < gas.size(); ++i) {
+            total_gas += gas[i];
+            total_cost += cost[i];
+            tank += gas[i] - cost[i];
+
+            if (tank < 0) {
+                start = i + 1;
+                tank = 0;
+            }
+        }
+        return total_gas >= total_cost ? start : -1;
+    }
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -171,6 +188,11 @@ int main()
     for (int val : result) {
         std::cout << val << " ";
     }
+
+    std::vector<int> gas = {1, 2, 3, 4, 5};
+    std::vector<int> cost = {3, 4, 5, 1, 2};
+    int index = canCompleteCircuit(gas, cost);
+    std::cout << "Starting gas station index: " << index << std::endl;
 
     return 0;
 }
