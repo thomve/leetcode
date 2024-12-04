@@ -118,6 +118,23 @@ public:
     std::set<int> mySet;
 };
 
+std::vector<int> productExceptSelf(vector<int>& products) {
+    std::vector<int> output(products.size(), 1);
+
+    int left = 1;
+    for (int i = 0; i < products.size(); i++) {
+        output[i] *= left;
+        left *= products[i];
+    }
+
+    int right = 1;
+    for (int i = products.size() - 1; i >= 0; i--) {
+        output[i] *= right;
+        right *= products[i];
+    }
+    return output;        
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -147,6 +164,13 @@ int main()
     int param_3 = obj->getRandom();
     
     std::cout << "param3 is: " << param_3 << std::endl;
+
+    std::vector<int> products = {2, 2, 3, 4};
+    std::vector<int> result = productExceptSelf(products);
+
+    for (int val : result) {
+        std::cout << val << " ";
+    }
 
     return 0;
 }
