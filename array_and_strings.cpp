@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <cstdlib>
 #include <set>
+#include <numeric>
 
 using namespace std;
 
@@ -152,6 +153,25 @@ int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
         return total_gas >= total_cost ? start : -1;
     }
 
+int candy(vector<int>& ratings) {
+    int n = ratings.size();
+    vector<int> candies(n, 1);
+    
+    for(int i = 1; i < n; i++) {
+        if(ratings[i] > ratings[i-1]) {
+            candies[i] = candies[i-1] + 1;
+        }
+    }
+    
+    for(int i = n-2; i >= 0; i--) {
+        if(ratings[i] > ratings[i+1]) {
+            candies[i] = max(candies[i], candies[i+1] + 1);
+        }
+    }
+    
+    return std::accumulate(candies.begin(), candies.end(), 0);
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -193,6 +213,11 @@ int main()
     std::vector<int> cost = {3, 4, 5, 1, 2};
     int index = canCompleteCircuit(gas, cost);
     std::cout << "Starting gas station index: " << index << std::endl;
+
+
+    std::vector<int> ratings = {1, 0, 2};
+    int ncandy = candy(ratings);
+    std::cout << "Minimum candies required: " << ncandy << std::endl;
 
     return 0;
 }
