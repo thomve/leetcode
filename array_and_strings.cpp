@@ -172,6 +172,34 @@ int candy(vector<int>& ratings) {
     return std::accumulate(candies.begin(), candies.end(), 0);
 }
 
+int trap(vector<int>& height) {
+    int n = height.size();
+    if (n == 0) return 0;
+
+    int left = 0, right = n - 1;
+    int left_max = 0, right_max = 0;
+    int water_trapped = 0;
+
+    while (left < right) {
+        if (height[left] <= height[right]) {
+            if (height[left] >= left_max) {
+                left_max = height[left];
+            } else {
+                water_trapped += left_max - height[left];
+            }
+            ++left;
+        } else {
+            if (height[right] >= right_max) {
+                right_max = height[right];
+            } else {
+                water_trapped += right_max - height[right];
+            }
+            --right;
+        }
+    }
+    return water_trapped;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -218,6 +246,10 @@ int main()
     std::vector<int> ratings = {1, 0, 2};
     int ncandy = candy(ratings);
     std::cout << "Minimum candies required: " << ncandy << std::endl;
+
+    std::vector<int> height = {0,1,0,2,1,0,1,3,2,1,2,1};
+    int trapped_water = trap(height);
+    std::cout << "Water trapped: " << trapped_water << std::endl;
 
     return 0;
 }
