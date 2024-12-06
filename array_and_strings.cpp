@@ -245,6 +245,39 @@ string intToRoman(int num) {
     return result;
 }
 
+int lengthOfLastWord(string s) {
+    int length = 0;
+    bool counting = false;
+    
+    for (int i = s.length() - 1; i >= 0; i--) {
+        if (s[i] != ' ') {
+            counting = true;
+            length++;
+        }
+        else if (counting) {
+            break;
+        }
+    }
+    
+    return length;
+}
+
+string longestCommonPrefix(vector<string>& strs) {
+    if (strs.empty()) return "";
+
+    string prefix = strs[0];
+
+    for (int i = 1; i < strs.size(); i++) {
+        while (strs[i].find(prefix) != 0) {
+            prefix = prefix.substr(0, prefix.length() - 1);
+
+            if (prefix.empty()) return "";
+        }
+    }
+
+    return prefix;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -304,5 +337,13 @@ int main()
     string roman_numeral = intToRoman(numerical_roman);
     cout << "The roman numeral is: " << roman_numeral << endl;
 
+    string s = "Hello World";
+    int len_last_word = lengthOfLastWord(s);
+    cout << "The length of the last word is: " << len_last_word << endl;
+
+    std::vector<string> strs = {"flower", "flow", "flight"};
+    string common_prefix = longestCommonPrefix(strs);
+    cout << "The longest common prefix is: " << common_prefix << endl;
+    
     return 0;
 }
