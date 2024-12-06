@@ -226,6 +226,25 @@ int romanToInt(string s) {
     return ans;
 }
 
+string intToRoman(int num) {
+    const pair<int, string> roman[] = {
+        {1000, "M"}, {900, "CM"}, {500, "D"}, {400, "CD"},
+        {100, "C"}, {90, "XC"}, {50, "L"}, {40, "XL"},
+        {10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}
+    };
+
+    string result = "";
+
+    for (const auto& [value, symbol] : roman) {
+        while (num >= value) {
+            result += symbol;
+            num -= value;
+        }
+    }
+
+    return result;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -280,5 +299,10 @@ int main()
     string romanNumeral = "MCMXCIV";
     int numeric_roman = romanToInt(romanNumeral);
     cout << "The integer value is: " << numeric_roman << endl;
+
+    int numerical_roman = 1994;
+    string roman_numeral = intToRoman(numerical_roman);
+    cout << "The roman numeral is: " << roman_numeral << endl;
+
     return 0;
 }
