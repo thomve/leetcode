@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <set>
 #include <numeric>
+#include <unordered_map>
+#include <string>
 
 using namespace std;
 
@@ -200,6 +202,30 @@ int trap(vector<int>& height) {
     return water_trapped;
 }
 
+int romanToInt(string s) {
+    unordered_map<char, int> m;
+    
+    m['I'] = 1;
+    m['V'] = 5;
+    m['X'] = 10;
+    m['L'] = 50;
+    m['C'] = 100;
+    m['D'] = 500;
+    m['M'] = 1000;
+    
+    int ans = 0;
+    
+    for(int i = 0; i < s.length(); i++){
+        if(m[s[i]] < m[s[i+1]]){
+            ans -= m[s[i]];
+        }
+        else{
+            ans += m[s[i]];
+        }
+    }
+    return ans;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -251,5 +277,8 @@ int main()
     int trapped_water = trap(height);
     std::cout << "Water trapped: " << trapped_water << std::endl;
 
+    string romanNumeral = "MCMXCIV";
+    int numeric_roman = romanToInt(romanNumeral);
+    cout << "The integer value is: " << numeric_roman << endl;
     return 0;
 }
