@@ -8,6 +8,7 @@
 #include <numeric>
 #include <unordered_map>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -278,6 +279,29 @@ string longestCommonPrefix(vector<string>& strs) {
     return prefix;
 }
 
+string reverseWords(string s) {
+    while (!s.empty() && s.front() == ' ') s.erase(s.begin());
+    while (!s.empty() && s.back() == ' ') s.pop_back();
+
+    std::istringstream iss(s);
+    std::vector<std::string> words;
+    std::string word;
+    while (iss >> word) {
+        words.push_back(word);
+    }
+
+    std::reverse(words.begin(), words.end());
+
+    std::string result;
+    for (size_t i = 0; i < words.size(); ++i) {
+        result += words[i];
+        if (i < words.size() - 1) {
+            result += ' ';
+        }
+    }
+    return result;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -344,6 +368,10 @@ int main()
     std::vector<string> strs = {"flower", "flow", "flight"};
     string common_prefix = longestCommonPrefix(strs);
     cout << "The longest common prefix is: " << common_prefix << endl;
+
+    string sentence = "the sky is blue";
+    string reversed_sentence = reverseWords(sentence);
+    cout << "The reversed sentence is: " << reversed_sentence << endl;
     
     return 0;
 }
