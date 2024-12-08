@@ -280,26 +280,24 @@ string longestCommonPrefix(vector<string>& strs) {
 }
 
 string reverseWords(string s) {
-    while (!s.empty() && s.front() == ' ') s.erase(s.begin());
-    while (!s.empty() && s.back() == ' ') s.pop_back();
-
-    std::istringstream iss(s);
-    std::vector<std::string> words;
-    std::string word;
-    while (iss >> word) {
-        words.push_back(word);
+    std::stringstream str(s);
+    string word;
+    vector <string> result;
+    
+    while(str >> word) {
+        result.push_back(word + ' ');
     }
+    std::reverse(result.begin(),result.end());
 
-    std::reverse(words.begin(), words.end());
+    string result1;
 
-    std::string result;
-    for (size_t i = 0; i < words.size(); ++i) {
-        result += words[i];
-        if (i < words.size() - 1) {
-            result += ' ';
-        }
+    for (size_t i = 0; i < result.size(); ++i) {
+        result1 += result[i];
     }
-    return result;
+    while (!result1.empty() && result1[result1.length() - 1] == ' ') {
+        result1.pop_back();
+    }
+    return result1;
 }
 
 int main()
