@@ -300,6 +300,23 @@ string reverseWords(string s) {
     return result1;
 }
 
+string convert(string s, int numRows) {
+    if (numRows == 1 || numRows >= s.size()) return s;
+    std::vector<string> rows(min(numRows, int(s.size())));
+    int curRow = 0;
+    bool goingDown = false;
+
+    for (char c : s) {
+        rows[curRow] += c;
+        if (curRow == 0 || curRow == numRows - 1) goingDown = !goingDown;
+        curRow += goingDown ? 1 : -1;
+    }
+
+    string result;
+    for (const string& row : rows) result += row;
+    return result;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -370,6 +387,11 @@ int main()
     string sentence = "the sky is blue";
     string reversed_sentence = reverseWords(sentence);
     cout << "The reversed sentence is: " << reversed_sentence << endl;
+    
+    string zigzag = "PAYPALISHIRING";
+    int numRows = 3;
+    string zigzag_string = convert(zigzag, numRows);
+    cout << "The zigzag string is: " << zigzag_string << endl;
     
     return 0;
 }
