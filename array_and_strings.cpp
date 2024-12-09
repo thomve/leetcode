@@ -317,6 +317,20 @@ string convert(string s, int numRows) {
     return result;
 }
 
+int strStr(string haystack, string needle) {
+    if (needle.empty()) return 0;
+    int n = haystack.size();
+    int m = needle.size();
+
+    for (int i = 0; i <= n - m; i++) {
+        if (haystack.substr(i, m) == needle) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -392,6 +406,11 @@ int main()
     int numRows = 3;
     string zigzag_string = convert(zigzag, numRows);
     cout << "The zigzag string is: " << zigzag_string << endl;
-    
+
+    string haystack = "hello";
+    string needle = "ll";
+    int d = strStr(haystack, needle);
+    cout << "The index of the needle is: " << d << endl;
+
     return 0;
 }
