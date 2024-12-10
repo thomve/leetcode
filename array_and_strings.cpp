@@ -330,6 +330,39 @@ int strStr(string haystack, string needle) {
     return -1;
 }
 
+vector<string> fullJustify(vector<string>& words, int maxWidth) {
+    vector<string> result;
+    vector<string> line;
+    int line_length = 0;
+
+    for (const string& word : words) {
+        if (line_length + word.size() + line.size() > maxWidth) {
+            int spaces = maxWidth - line_length;
+            for (int i = 0; i < spaces; ++i) {
+                line[i % (line.size() - 1 ? line.size() - 1 : 1)] += ' ';
+            }
+            stringstream ss;
+            for (const string& s : line) ss << s;
+            result.push_back(ss.str());
+            line.clear();
+            line_length = 0;
+        }
+
+        line.push_back(word);
+        line_length += word.size();
+    }
+    stringstream ss;
+    for (size_t i = 0; i < line.size(); ++i) {
+        ss << line[i];
+        if (i != line.size() - 1) ss << ' ';
+    }
+    string last_line = ss.str();
+    last_line.append(maxWidth - last_line.size(), ' ');
+    result.push_back(last_line);
+
+    return result;
+}
+
 
 int main()
 {
@@ -412,5 +445,12 @@ int main()
     int d = strStr(haystack, needle);
     cout << "The index of the needle is: " << d << endl;
 
+    std::vector<string> words = {"This", "is", "an", "example", "of", "text", "justification"};
+    int maxWidth = 16;
+    std::vector<string> justified_text = fullJustify(words, maxWidth);
+    for (const string& text : justified_text) {
+        cout << text << endl;
+    }
+    
     return 0;
 }
