@@ -363,6 +363,31 @@ vector<string> fullJustify(vector<string>& words, int maxWidth) {
     return result;
 }
 
+char toLower(char ch){
+    if(ch >= 'A' && ch <= 'Z'){
+        return ch - 'A' + 'a';
+    }
+    return ch;
+}
+bool isAlphaNumeric(char ch) {
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
+}
+bool isPalindrome(string s) {
+    int i = 0 , j = s.length()-1;
+    while(i < j){
+        while(i < j && !isAlphaNumeric(s[i])) i++;
+        while(i < j && !isAlphaNumeric(s[j])) j--;
+
+        if(toLower(s[i]) != toLower(s[j])){
+            return false;
+        }
+        else{
+            i++;
+            j--;
+        }
+    }
+return true;
+}
 
 int main()
 {
@@ -452,5 +477,10 @@ int main()
         cout << text << endl;
     }
     
+    string palindrome = "A man, a plan, a canal: Panama";
+    cout << "Is the string a palindrome: " << isPalindrome(palindrome) << endl;
+
+    string palindrome_bis = "Not a palindrome";
+    cout << "Is the string a palindrome: " << isPalindrome(palindrome_bis) << endl;
     return 0;
 }
