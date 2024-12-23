@@ -389,6 +389,17 @@ bool isPalindrome(string s) {
 return true;
 }
 
+bool isSubsequence(string s, string t) {
+    int sIndex = 0, tIndex = 0;
+    while (sIndex < s.size() && tIndex < t.size()) {
+        if (s[sIndex] == t[tIndex]) {
+            sIndex++;
+        }
+        tIndex++;
+    }
+    return sIndex == s.size();
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -482,5 +493,9 @@ int main()
 
     string palindrome_bis = "Not a palindrome";
     cout << "Is the string a palindrome: " << isPalindrome(palindrome_bis) << endl;
+
+    string s1 = "abc", t1 = "ahbgdc";
+    cout << "Is s a subsequence of t: " << isSubsequence(s1, t1) << endl;
+    
     return 0;
 }
