@@ -400,6 +400,24 @@ bool isSubsequence(string s, string t) {
     return sIndex == s.size();
 }
 
+vector<int> twoSum(vector<int>& numbers, int target) {
+        int left = 0;
+        int right = numbers.size() - 1;
+
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
+
+            if (sum == target) {
+                return {left + 1, right + 1};
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return {};
+    }
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -496,6 +514,15 @@ int main()
 
     string s1 = "abc", t1 = "ahbgdc";
     cout << "Is s a subsequence of t: " << isSubsequence(s1, t1) << endl;
-    
+
+    std::vector<int> numbers = {2, 6, 7, 11, 15};
+    int target = 9;
+    std::vector<int> indices = twoSum(numbers, target);
+    cout << "The indices are: ";
+    for (int index : indices) {
+        cout << index << " ";
+    }
+    cout << endl;
+
     return 0;
 }
