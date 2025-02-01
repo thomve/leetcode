@@ -418,6 +418,25 @@ vector<int> twoSum(vector<int>& numbers, int target) {
         return {};
     }
 
+
+int maxArea(vector<int>& height) {
+    int left = 0, right = height.size() - 1;
+    int max_area = 0;
+    
+    while (left < right) {
+        int area = min(height[left], height[right]) * (right - left);
+        max_area = max(max_area, area);
+        
+        if (height[left] < height[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    
+    return max_area;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
@@ -523,6 +542,9 @@ int main()
         cout << index << " ";
     }
     cout << endl;
+
+    std::vector<int> heights = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+    cout << "The maximum area is: " << maxArea(heights) << endl;
 
     return 0;
 }
