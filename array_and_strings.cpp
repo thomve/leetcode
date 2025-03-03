@@ -524,22 +524,26 @@ int maxArea(vector<int> &height)
     return max_area;
 }
 
-vector<vector<int>> threeSum(vector<int> &nums) {
+vector<vector<int>> threeSum(vector<int> &nums)
+{
     vector<vector<int>> res;
     sort(nums.begin(), nums.end());
     int n = nums.size();
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         if (i > 0 && nums[i] == nums[i - 1])
             continue;
         int j = i + 1;
         int k = n - 1;
-        while (j < k) {
+        while (j < k)
+        {
             int total = nums[i] + nums[j] + nums[k];
             if (total > 0)
                 --k;
             else if (total < 0)
                 ++j;
-            else {
+            else
+            {
                 res.push_back({nums[i], nums[j], nums[k]});
                 ++j;
 
@@ -551,21 +555,65 @@ vector<vector<int>> threeSum(vector<int> &nums) {
     return res;
 }
 
-int minSubArrayLen(int target, vector<int>& nums) {
+int minSubArrayLen(int target, vector<int> &nums)
+{
     int n = nums.size();
     int left = 0, sum = 0;
     int minLength = INT_MAX;
 
-    for (int right = 0; right < n; ++right) {
+    for (int right = 0; right < n; ++right)
+    {
         sum += nums[right];
 
-        while (sum >= target) {
+        while (sum >= target)
+        {
             minLength = min(minLength, right - left + 1);
             sum -= nums[left++];
         }
     }
 
     return (minLength == INT_MAX) ? 0 : minLength;
+}
+
+int lengthOfLongestSubstring(string s)
+{
+    bool CharArray[255];
+    for (int i = 0; i < 255; ++i)
+    {
+        CharArray[i] = false;
+    }
+
+    int MaxLength = 0;
+    int StringStartIndex = 0;
+    int StringEndIndex = 0;
+
+    while (StringEndIndex < s.size())
+    {
+        char CurrentChar = s[StringEndIndex];
+        if (CharArray[CurrentChar])
+        {
+            while (StringStartIndex < StringEndIndex)
+            {
+                char LeadingCharacter = s[StringStartIndex];
+                CharArray[LeadingCharacter] = false;
+                StringStartIndex++;
+                if (LeadingCharacter == CurrentChar)
+                {
+                    break;
+                }
+            }
+        }
+
+        CharArray[CurrentChar] = true;
+
+        StringEndIndex++;
+        int Length = StringEndIndex - StringStartIndex;
+        if (Length > MaxLength)
+        {
+            MaxLength = Length;
+        }
+    }
+    return MaxLength;
 }
 
 int main()
