@@ -12,7 +12,6 @@
 #include <sstream>
 #include <unordered_set>
 
-
 using namespace std;
 
 int maxProfit(vector<int> &prices)
@@ -618,16 +617,21 @@ int lengthOfLongestSubstring(string s)
     return MaxLength;
 }
 
-bool isValidSudoku(vector<vector<char>>& board) {
+bool isValidSudoku(vector<vector<char>> &board)
+{
     vector<unordered_set<char>> rows(9), cols(9), boxes(9);
 
-    for (int r = 0; r < 9; ++r) {
-        for (int c = 0; c < 9; ++c) {
+    for (int r = 0; r < 9; ++r)
+    {
+        for (int c = 0; c < 9; ++c)
+        {
             char num = board[r][c];
-            if (num == '.') continue;
+            if (num == '.')
+                continue;
             int boxIndex = (r / 3) * 3 + (c / 3);
 
-            if (rows[r].count(num) || cols[c].count(num) || boxes[boxIndex].count(num)) {
+            if (rows[r].count(num) || cols[c].count(num) || boxes[boxIndex].count(num))
+            {
                 return false;
             }
 
@@ -638,6 +642,50 @@ bool isValidSudoku(vector<vector<char>>& board) {
     }
 
     return true;
+}
+
+vector<int> spiralOrder(vector<vector<int>> &matrix)
+{
+    // 00 01 02 12 22 21 20 10 11
+    vector<int> v;
+    // first row last column last row first column second row n-i-1 column (second last column)
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    int top = 0, left = 0, right = m - 1, bottom = n - 1;
+
+    while (top <= bottom && left <= right)
+    {
+        for (int i = left; i <= right; i++)
+        {
+            v.push_back(matrix[top][i]);
+        }
+        top++;
+        for (int i = top; i <= bottom; i++)
+        {
+            v.push_back(matrix[i][right]);
+        }
+        right--;
+        if (top <= bottom)
+        {
+            for (int i = right; i >= left; i--)
+            {
+                v.push_back(matrix[bottom][i]);
+            }
+            bottom--;
+        }
+
+        if (left <= right)
+        {
+            for (int i = bottom; i >= top; i--)
+            {
+                v.push_back(matrix[i][left]);
+            }
+            left++;
+        }
+    }
+
+    return v;
 }
 
 int main()
