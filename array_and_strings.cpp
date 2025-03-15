@@ -688,6 +688,25 @@ vector<int> spiralOrder(vector<vector<int>> &matrix)
     return v;
 }
 
+// Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+// Each letter in magazine can only be used once in ransomNote.
+bool canConstruct(string ransomNote, string magazine) {
+    unordered_map<char, int> charCount;
+
+   for (char c : magazine) {
+       charCount[c]++;
+   }
+
+   for (char c : ransomNote) {
+       if (charCount[c] == 0) {
+           return false;
+       }
+       charCount[c]--;
+   }
+
+   return true; 
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
