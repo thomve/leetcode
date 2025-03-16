@@ -707,6 +707,26 @@ bool canConstruct(string ransomNote, string magazine) {
    return true; 
 }
 
+// Given two strings s and t, determine if they are isomorphic.
+// Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+// All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+bool isIsomorphic(string s, string t) {
+    if(s.length() != t.length()){
+        return false;
+    }
+    unordered_map<char, char> mpp1;
+    unordered_map<char, char> mpp2;
+
+    for(int i=0; i<s.length(); i++){
+        if(mpp1.find(s[i]) != mpp1.end() && mpp1[s[i]] != t[i] || mpp2.find(t[i]) != mpp2.end() && mpp2[t[i]] != s[i] ) {
+            return false;
+        }
+        mpp1[s[i]]=t[i];
+        mpp2[t[i]]=s[i];
+    }
+    return true;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
