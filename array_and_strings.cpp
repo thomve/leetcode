@@ -690,41 +690,82 @@ vector<int> spiralOrder(vector<vector<int>> &matrix)
 
 // Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
 // Each letter in magazine can only be used once in ransomNote.
-bool canConstruct(string ransomNote, string magazine) {
+bool canConstruct(string ransomNote, string magazine)
+{
     unordered_map<char, int> charCount;
 
-   for (char c : magazine) {
-       charCount[c]++;
-   }
+    for (char c : magazine)
+    {
+        charCount[c]++;
+    }
 
-   for (char c : ransomNote) {
-       if (charCount[c] == 0) {
-           return false;
-       }
-       charCount[c]--;
-   }
+    for (char c : ransomNote)
+    {
+        if (charCount[c] == 0)
+        {
+            return false;
+        }
+        charCount[c]--;
+    }
 
-   return true; 
+    return true;
 }
 
 // Given two strings s and t, determine if they are isomorphic.
 // Two strings s and t are isomorphic if the characters in s can be replaced to get t.
 // All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
-bool isIsomorphic(string s, string t) {
-    if(s.length() != t.length()){
+bool isIsomorphic(string s, string t)
+{
+    if (s.length() != t.length())
+    {
         return false;
     }
     unordered_map<char, char> mpp1;
     unordered_map<char, char> mpp2;
 
-    for(int i=0; i<s.length(); i++){
-        if(mpp1.find(s[i]) != mpp1.end() && mpp1[s[i]] != t[i] || mpp2.find(t[i]) != mpp2.end() && mpp2[t[i]] != s[i] ) {
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (mpp1.find(s[i]) != mpp1.end() && mpp1[s[i]] != t[i] || mpp2.find(t[i]) != mpp2.end() && mpp2[t[i]] != s[i])
+        {
             return false;
         }
-        mpp1[s[i]]=t[i];
-        mpp2[t[i]]=s[i];
+        mpp1[s[i]] = t[i];
+        mpp2[t[i]] = s[i];
     }
     return true;
+}
+
+// Given a pattern and a string s, find if s follows the same pattern.
+bool wordPattern(string pattern, string s) {
+    unordered_map<char, string> charToWord;
+    unordered_set<string> usedWords;
+    stringstream ss(s);
+    string word;
+    int i = 0;
+
+    while (ss >> word)
+    {
+        if (i >= pattern.size())
+            return false;
+
+        char c = pattern[i];
+
+        if (charToWord.count(c))
+        {
+            if (charToWord[c] != word)
+                return false;
+        }
+        else
+        {
+            if (usedWords.count(word))
+                return false;
+            charToWord[c] = word;
+            usedWords.insert(word);
+        }
+        i++;
+    }
+
+    return i == pattern.size();
 }
 
 int main()
