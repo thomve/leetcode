@@ -768,6 +768,17 @@ bool wordPattern(string pattern, string s) {
     return i == pattern.size();
 }
 
+// Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+bool isAnagram(string s, string t) {
+    unordered_map<char, int> map;
+    for(auto it : s) map[it]++;
+    for(auto it : t) map[it]--;
+    for(auto it : map) {
+        if (it.second != 0) return false;
+    }
+    return true;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
