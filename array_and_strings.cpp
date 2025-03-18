@@ -779,6 +779,31 @@ bool isAnagram(string s, string t) {
     return true;
 }
 
+// You are given a sorted unique integer array nums.
+// A range [a,b] is the set of all integers from a to b (inclusive).
+// Return the smallest sorted list of ranges that cover all the numbers in the array exactly. That is, each element of nums is covered by exactly one of the ranges, and there is no integer x such that x is in one of the ranges but not in nums.
+vector<string> summaryRanges(vector<int>& nums) {
+    vector<string> result;
+    int n = nums.size();
+    if (n == 0) return result;
+
+    for (int i = 0; i < n; ++i) {
+        int start = nums[i];
+
+        while (i + 1 < n && nums[i + 1] == nums[i] + 1) {
+            ++i;
+        }
+
+        if (start == nums[i]) {
+            result.push_back(to_string(start));
+        } else {
+            result.push_back(to_string(start) + "->" + to_string(nums[i]));
+        }
+    }
+
+    return result;
+}
+
 int main()
 {
     std::vector<int> prices = {7, 1, 5, 3, 6, 4};
