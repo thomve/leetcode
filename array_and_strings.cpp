@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <unordered_set>
+#include <stack>
 
 using namespace std;
 
@@ -802,6 +803,40 @@ vector<string> summaryRanges(vector<int>& nums) {
     }
 
     return result;
+}
+
+// Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation.
+// Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
+// Example:
+// Input: s = "(1+(4+5+2)-3)+(6+8)" Output: 23
+int calculate(string s) {
+    stack<int> st;
+    int operand = 0, result = 0, sign = 1;
+    
+    for (char ch : s) {
+        if (isdigit(ch)) {
+            operand = (operand * 10) + (ch - '0');
+        } else if (ch == '+') {
+            result += sign * operand;
+            operand = 0;
+            sign = 1;
+        } else if (ch == '-') {
+            result += sign * operand;
+            operand = 0;
+            sign = -1;
+        } else if (ch == '(') {
+            st.push(result);
+            st.push(sign);
+            result = 0;
+            sign = 1;
+        } else if (ch == ')') {
+            result += sign * operand;
+            operand = 0;
+            result *= st.top(); st.pop();
+            result += st.top(); st.pop();
+        }
+    }
+    return result + (sign * operand);
 }
 
 int main()
