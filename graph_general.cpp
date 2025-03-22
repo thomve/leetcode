@@ -1,8 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+
 
 using namespace std;
 
+// Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+// An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+// You may assume all four edges of the grid are all surrounded by water.
 class NumberOfIslands
 {
 public:
@@ -52,8 +57,61 @@ public:
     }
 };
 
+// There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1.
+// You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+// For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+// Return true if you can finish all courses. Otherwise, return false.
+class CourseSchedule
+{
+public:
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
+    {
+        vector<int> inDegree(numCourses, 0);
+        vector<vector<int>> adjList(numCourses);
+
+        // Build adjacency list and in-degree array
+        for (auto &pre : prerequisites)
+        {
+            int course = pre[0], prereq = pre[1];
+            adjList[prereq].push_back(course);
+            inDegree[course]++;
+        }
+
+        queue<int> q;
+
+        // Push all courses with 0 in-degree (no prerequisites) into the queue
+        for (int i = 0; i < numCourses; i++)
+        {
+            if (inDegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+
+        int count = 0;
+        while (!q.empty())
+        {
+            int course = q.front();
+            q.pop();
+            count++;
+
+            for (int neighbor : adjList[course])
+            {
+                inDegree[neighbor]--;
+                if (inDegree[neighbor] == 0)
+                {
+                    q.push(neighbor);
+                }
+            }
+        }
+
+        return count == numCourses;
+    }
+};
+
 int main()
 {
+    // Number of Islands
     vector<vector<char>> grid = {
         {'1', '1', '0', '0', '0'},
         {'1', '1', '0', '0', '0'},
@@ -62,5 +120,13 @@ int main()
 
     NumberOfIslands noi;
     cout << "Number of islands: " << noi.numIslands(grid) << endl;
+
+    // Course Schedule
+    CourseSchedule cs;
+    vector<vector<int>> prerequisites = {{1, 0}, {2, 1}, {3, 2}};
+    int numCourses = 4;
+    
+    cout << (cs.canFinish(numCourses, prerequisites) ? "True" : "False") << endl;
+    
     return 0;
 }
