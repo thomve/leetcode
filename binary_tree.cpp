@@ -1,5 +1,7 @@
 #include <iostream>
 #include <climits>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -33,5 +35,58 @@ public:
         maxSum = INT_MIN;
         findMaxPath(root);
         return maxSum;
+    }
+};
+
+constexpr auto MAX_ABSOLUTE_VAL = 3000;
+array<int, 2 * MAX_ABSOLUTE_VAL + 1> inorderValToIdx;
+
+class BtFromPreorderAndInorder
+{
+    static TreeNode *buildtree(
+        const vector<int> &preorder,
+        int preOrderStartIdx,
+        int preOrderLastIdx,
+        const vector<int> &inorder,
+        int inOrderStartIdx,
+        int inOrderLastIdx)
+    {
+        const auto val = preorder[preOrderStartIdx];
+        const auto root = new TreeNode(val);
+
+        const int inOrderValIdx = inorderValToIdx[MAX_ABSOLUTE_VAL + val];
+        const int countOfNodesOnLeft = inOrderValIdx - inOrderStartIdx;
+        if (countOfNodesOnLeft > 0)
+        {
+            root->left = buildtree(
+                preorder,
+                preOrderStartIdx + 1,
+                preOrderStartIdx + countOfNodesOnLeft,
+                inorder,
+                inOrderStartIdx,
+                inOrderValIdx - 1);
+        }
+
+        if (preOrderLastIdx - preOrderStartIdx > countOfNodesOnLeft)
+        {
+            root->right = buildtree(
+                preorder,
+                preOrderStartIdx + countOfNodesOnLeft + 1,
+                preOrderLastIdx,
+                inorder,
+                inOrderValIdx + 1,
+                inOrderLastIdx);
+        }
+
+        return root;
+    }
+
+public:
+    static TreeNode *buildTree(const vector<int> &preorder, const vector<int> &inorder)
+    {
+        for (int i = 0; i < inorder.size(); ++i)
+            inorderValToIdx[MAX_ABSOLUTE_VAL + inorder[i]] = i;
+
+        return buildtree(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
     }
 };
