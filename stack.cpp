@@ -48,11 +48,11 @@ public:
 };
 
 string simplifyPath(string path) {
-    std::stack<std::string> st;
-    std::stringstream ss(path);
-    std::string token;
+    stack<string> st;
+    stringstream ss(path);
+    string token;
 
-    while (std::getline(ss, token, '/')) {
+    while (getline(ss, token, '/')) {
         if (token.empty() || token == ".") {
             continue;
         } else if (token == "..") {
@@ -64,8 +64,8 @@ string simplifyPath(string path) {
         }
     }
 
-    std::string result;
-    std::vector<std::string> components;
+    string result;
+    vector<string> components;
     while (!st.empty()) {
         components.push_back(st.top());
         st.pop();
