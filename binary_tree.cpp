@@ -91,16 +91,56 @@ public:
     }
 };
 
-
-TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
     if (root == nullptr || root == p || root == q)
         return root;
 
-    TreeNode* left = lowestCommonAncestor(root->left, p, q);
-    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+    TreeNode *left = lowestCommonAncestor(root->left, p, q);
+    TreeNode *right = lowestCommonAncestor(root->right, p, q);
 
     if (left != nullptr && right != nullptr)
         return root;
 
     return left != nullptr ? left : right;
 }
+
+class BSTIterator
+{
+public:
+    TreeNode *head, *cur;
+
+    void dfs(TreeNode *root)
+    {
+        if (root == NULL)
+            return;
+
+        dfs(root->left);
+
+        TreeNode *right = root->right;
+
+        cur->right = root;
+        cur = cur->right;
+        cur->left = cur->right = NULL;
+
+        dfs(right);
+    }
+    BSTIterator(TreeNode *root)
+    {
+        head = new TreeNode();
+        cur = head;
+        dfs(root);
+        cur = head;
+    }
+
+    int next()
+    {
+        cur = cur->right;
+        return cur->val;
+    }
+    
+    bool hasNext()
+    {
+        return cur->right != NULL;
+    }
+};
