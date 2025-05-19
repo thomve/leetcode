@@ -144,3 +144,26 @@ public:
         return cur->right != NULL;
     }
 };
+
+
+class FlattenBTtoLinkedList {
+public:
+    void flatten(TreeNode* root) {
+        if (!root) return;
+
+        flatten(root->left);
+        flatten(root->right);
+
+        TreeNode* leftSubtree = root->left;
+        TreeNode* rightSubtree = root->right;
+
+        root->left = nullptr;
+        root->right = leftSubtree;
+
+        TreeNode* temp = root;
+        while (temp->right) {
+            temp = temp->right;
+        }
+        temp->right = rightSubtree;
+    }
+};
