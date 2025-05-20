@@ -167,3 +167,39 @@ public:
         temp->right = rightSubtree;
     }
 };
+
+class CountCompleteTreeNodes {
+public:
+        int computeLeftHeight(TreeNode* node) {
+        int height = 0;
+        while (node) {
+            height++;
+            node = node->left;
+        }
+        return height;
+    }
+
+    int computeRightHeight(TreeNode* node) {
+        int height = 0;
+        while (node) {
+            height++;
+            node = node->right;
+        }
+        return height;
+    }
+
+    int countNodes(TreeNode* root) {
+        if (!root) return 0;
+
+        int leftHeight = computeLeftHeight(root);
+        int rightHeight = computeRightHeight(root);
+
+        if (leftHeight == rightHeight) {
+            // Tree is perfect
+            return pow(2, leftHeight) - 1;
+        } else {
+            // Recurse for left and right subtrees
+            return 1 + countNodes(root->left) + countNodes(root->right);
+        }
+    }
+};
