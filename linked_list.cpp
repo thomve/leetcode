@@ -133,3 +133,31 @@ public:
         }
     }
 };
+
+// Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+// You should preserve the original relative order of the nodes in each of the two partitions.
+ListNode* partition(ListNode* head, int x) {
+    ListNode* lessHead = new ListNode(0);
+    ListNode* greaterHead = new ListNode(0);
+    ListNode* less = lessHead;
+    ListNode* greater = greaterHead;
+
+    while (head) {
+        if (head->val < x) {
+            less->next = head;
+            less = less->next;
+        } else {
+            greater->next = head;
+            greater = greater->next;
+        }
+        head = head->next;
+    }
+
+    greater->next = nullptr;  // Important to avoid potential cycles
+    less->next = greaterHead->next;
+
+    ListNode* newHead = lessHead->next;
+    delete lessHead;
+    delete greaterHead;
+    return newHead;
+}
