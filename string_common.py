@@ -1,3 +1,11 @@
+
+"""
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+
+'?' Matches any single character.
+'*' Matches any sequence of characters (including the empty sequence).
+The matching should cover the entire input string (not partial).
+"""
 def isMatch(s: str, p: str) -> bool:
     i = j = 0                 # i -> s index, j -> p index
     star = -1                 # last position of '*' in p
